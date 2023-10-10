@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 """
 Задана строка S и символ С. За один ход можно поменять местами два соседних символа. Сколько потребуется ходов чтобы переместить все символы С в строке в начало строки, не меняя при этом порядок следования между остальным символами.
-
 Например, имеется строка abcabcabc, и задан символ b. После перемещения всех символов b в начало строки, получится строка 
 bbbacacac, на это уйдёт 9 ходов, ниже указаны строки получившиеся после кажого хода.
 1. bacabcabc
@@ -42,3 +41,26 @@ bbbacacac, на это уйдёт 9 ходов, ниже указаны стро
 @author: workk
 """
 
+def task5(S, C):
+  total_moves = 0
+  cur_moves = 0
+  iter = 0
+  while iter < len(S):
+    if S[iter] != C:
+      cur_moves += 1
+      iter += 1
+    else:
+      for i in range(cur_moves):
+        S = list(S)
+        S[iter - i], S[iter - i - 1] = S[iter - i - 1], S[iter - i]
+      S = ''.join(S)
+      total_moves += cur_moves
+      if iter > cur_moves:
+        iter -= cur_moves - 1
+      cur_moves = 0
+  return total_moves
+
+
+S, C = input('Введите строку и символ через пробел: ').split()
+
+print(task5(S, C)) 
